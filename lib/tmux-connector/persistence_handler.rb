@@ -12,7 +12,7 @@ module TmuxConnector
     created = Time.now.strftime('%Y-%m-%d %H:%M')
 
     file = File.join(BASE_DIR, "#{ session_name.gsub(/[^a-zA-Z0-9_-]+/, '-') }.bin")
-    file.sub!('.bin', "__#{ created.gsub(/[ :]/, '_') }.bin") if File.exists? file
+    file.sub!('.bin', "__#{ created.gsub(/[ :]/, '_') }.bin") if File.exist? file
 
     update_main_file(session_name, created, file, session_obj.args['--purpose'])
 
@@ -32,11 +32,11 @@ module TmuxConnector
   end
 
   def self.prepare_if_necessary()
-    unless File.exists?(BASE_DIR) && File.directory?(BASE_DIR)
+    unless File.exist?(BASE_DIR) && File.directory?(BASE_DIR)
       Dir.mkdir(BASE_DIR)
     end
 
-    FileUtils.touch MAIN_FILE unless File.exists? MAIN_FILE
+    FileUtils.touch MAIN_FILE unless File.exist? MAIN_FILE
   end
 
   def self.delete_all()
@@ -77,7 +77,7 @@ module TmuxConnector
   def self.get_new_session_name(args)
     specified = args["--session-name"]
 
-    if File.exists? MAIN_FILE
+    if File.exist? MAIN_FILE
       existing_names = list_sessions.keys
 
       if specified
